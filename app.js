@@ -1,74 +1,156 @@
 const wallpapers = [
   {
-    name: "GOTHAM",
-    bg: "linear-gradient(135deg,#050505,#151515 55%,#f5c400)",
-    symbol: "🦇"
+    nombre: "GOTHAM NIGHT",
+    color: "linear-gradient(135deg,#050505,#151515,#f5c400)"
   },
   {
-    name: "DARK KNIGHT",
-    bg: "linear-gradient(145deg,#000 35%,#252525 70%,#f5c400)",
-    symbol: "🦇"
+    nombre: "DARK KNIGHT",
+    color: "linear-gradient(135deg,#000000,#242424,#f5c400)"
   },
   {
-    name: "BAT SIGNAL",
-    bg: "radial-gradient(circle at 50% 35%,#f5c400 0 12%,#171717 13% 45%,#000 70%)",
-    symbol: "🦇"
+    nombre: "BAT SIGNAL",
+    color: "radial-gradient(circle,#f5c400 0%,#111 35%,#000 75%)"
   },
   {
-    name: "GOTHAM NIGHT",
-    bg: "linear-gradient(160deg,#000 20%,#111 60%,#f5c400)",
-    symbol: "BAT"
+    nombre: "GOTHAM CITY",
+    color: "linear-gradient(160deg,#000,#111827,#f5c400)"
   }
 ];
 
-const buttons = document.querySelectorAll(".grid button");
+const botones = document.querySelectorAll(".grid button");
 
-buttons.forEach(button => {
-  const text = button.querySelector("small")?.textContent;
+botones.forEach(boton => {
+  const nombre = boton.querySelector("small")?.textContent.trim();
 
-  if (text === "Fondos") {
-    button.addEventListener("click", showWallpapers);
+  if (nombre === "Fondos" || nombre === "Galería") {
+    boton.onclick = abrirFondos;
   }
 
-  if (text === "Favoritos") {
-    button.addEventListener("click", showFavorites);
+  if (nombre === "Favoritos") {
+    boton.onclick = () => {
+      alert("⭐ Próximamente podrás guardar tus fondos favoritos.");
+    };
   }
 
-  if (text === "Galería") {
-    button.addEventListener("click", showWallpapers);
+  if (nombre === "Ajustes") {
+    boton.onclick = () => {
+      alert("⚙️ Ajustes de Gotham");
+    };
   }
 });
 
-document.getElementById("mode")?.addEventListener("click", () => {
+document.getElementById("mode").onclick = () => {
   document.body.classList.toggle("light");
-});
+};
 
-function showWallpapers() {
-  const old = document.getElementById("wallpaper-menu");
-  if (old) old.remove();
+function abrirFondos() {
+  const pantalla = document.createElement("div");
 
-  const menu = document.createElement("div");
-  menu.id = "wallpaper-menu";
-
-  menu.style.cssText = `
+  pantalla.style.cssText = `
     position:fixed;
     inset:0;
-    background:#050609;
     z-index:9999;
+    background:#050505;
+    color:white;
     padding:25px;
     overflow:auto;
-    color:white;
     font-family:Arial,sans-serif;
   `;
 
-  menu.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <h2 style="color:#f5c400;margin:0">🦇 FONDOS</h2>
-      <button id="close-wallpapers"
-        style="background:#1a1a1a;color:#f5c400;border:1px solid #555;border-radius:50%;width:40px;height:40px;font-size:20px">
-        ✕
-      </button>
-    </div>
+  pantalla.innerHTML = `
+    <div style="max-width:500px;margin:auto">
 
-    <p style="color:#aaa;font-size:13px">
-      Elegí tu fondo favorito para
+      <button id="cerrarFondos"
+        style="
+          background:#f5c400;
+          color:#000;
+          border:0;
+          border-radius:10px;
+          padding:12px 18px;
+          font-weight:bold;
+        ">
+        ← VOLVER
+      </button>
+
+      <h1 style="color:#f5c400;margin-top:25px">
+        🦇 FONDOS GOTHAM
+      </h1>
+
+      <p style="color:#aaa">
+        Elegí tu fondo favorito
+      </p>
+
+      <div id="listaFondos"
+        style="
+          display:grid;
+          gap:15px;
+          margin-top:20px;
+        ">
+      </div>
+
+    </div>
+  `;
+
+  document.body.appendChild(pantalla);
+
+  document.getElementById("cerrarFondos").onclick = () => {
+    pantalla.remove();
+  };
+
+  const lista = document.getElementById("listaFondos");
+
+  wallpapers.forEach(fondo => {
+
+    const tarjeta = document.createElement("div");
+
+    tarjeta.style.cssText = `
+      background:${fondo.color};
+      border:1px solid #f5c400;
+      border-radius:18px;
+      padding:20px;
+      min-height:180px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      box-shadow:0 0 20px #000;
+    `;
+
+    tarjeta.innerHTML = `
+      <div style="
+        font-size:60px;
+        text-align:center;
+        margin-bottom:15px;
+      ">
+        🦇
+      </div>
+
+      <strong style="
+        color:#f5c400;
+        font-size:16px;
+      ">
+        ${fondo.nombre}
+      </strong>
+
+      <button
+        style="
+          margin-top:12px;
+          padding:12px;
+          border:0;
+          border-radius:10px;
+          background:#f5c400;
+          color:#000;
+          font-weight:bold;
+        ">
+        ELEGIR FONDO
+      </button>
+    `;
+
+    const boton = tarjeta.querySelector("button");
+
+    boton.onclick = () => {
+      alert("🦇 Fondo seleccionado.");
+    };
+
+    lista.appendChild(tarjeta);
+  });
+}
