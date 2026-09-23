@@ -1,95 +1,160 @@
-alert("GOTHAM FUNCIONA");
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#090b10">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<title>GOTHAM | Dark Knight</title>
-<link rel="stylesheet" href="style.css">
-</head>
+const wallpapers = [
+  {
+    nombre: "GOTHAM NIGHT",
+    color: "linear-gradient(135deg,#050505,#151515,#f5c400)"
+  },
+  {
+    nombre: "DARK KNIGHT",
+    color: "linear-gradient(135deg,#000000,#242424,#f5c400)"
+  },
+  {
+    nombre: "BAT SIGNAL",
+    color: "radial-gradient(circle,#f5c400 0%,#111 35%,#000 75%)"
+  },
+  {
+    nombre: "GOTHAM CITY",
+    color: "linear-gradient(160deg,#000,#111827,#f5c400)"
+  }
+];
 
-<body>
+document.addEventListener("DOMContentLoaded", function() {
 
-<main class="phone">
+  const modo = document.getElementById("mode");
 
-<header>
-  <span class="mark">🦇</span>
-  <span>
-    GOTHAM
-    <small>S24 ULTRA EDITION</small>
-  </span>
-  <button id="mode" type="button">☾</button>
-</header>
+  if (modo) {
+    modo.addEventListener("click", function() {
+      document.body.classList.toggle("light");
+    });
+  }
 
-<section class="hero">
+  const fondos = document.getElementById("fondos");
+  const galeria = document.getElementById("galeria");
+  const favoritos = document.getElementById("favoritos");
+  const ajustes = document.getElementById("ajustes");
 
-  <p class="eyebrow">GOTHAM CITY • NIGHT MODE</p>
+  if (fondos) fondos.addEventListener("click", abrirFondos);
+  if (galeria) galeria.addEventListener("click", abrirFondos);
 
-  <h1>
-    THE<br>
-    <em>DARK KNIGHT</em>
-  </h1>
+  if (favoritos) {
+    favoritos.addEventListener("click", function() {
+      alert("⭐ Tus favoritos aparecerán aquí.");
+    });
+  }
 
-  <p class="sub">
-    La noche también tiene un guardián.
-  </p>
+  if (ajustes) {
+    ajustes.addEventListener("click", function() {
+      alert("⚙️ Ajustes de Gotham.");
+    });
+  }
 
-  <div class="bat">🦇</div>
+});
 
-</section>
+function abrirFondos() {
 
-<section class="panel">
+  const pantalla = document.createElement("div");
 
-  <h2>ACCESOS RÁPIDOS</h2>
+  pantalla.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:#050505;
+    color:white;
+    padding:25px;
+    overflow:auto;
+    font-family:Arial,sans-serif;
+  `;
 
-  <div class="grid">
+  pantalla.innerHTML = `
+    <div style="max-width:500px;margin:auto">
 
-    <button type="button" id="galeria">
-      ◈
-      <small>Galería</small>
-    </button>
+      <button id="cerrar"
+        style="
+          background:#f5c400;
+          color:#000;
+          border:0;
+          border-radius:10px;
+          padding:12px 20px;
+          font-weight:bold;
+        ">
+        ← VOLVER
+      </button>
 
-    <button type="button" id="fondos">
-      ▣
-      <small>Fondos</small>
-    </button>
+      <h1 style="color:#f5c400;margin-top:25px">
+        🦇 FONDOS GOTHAM
+      </h1>
 
-    <button type="button" id="favoritos">
-      ✦
-      <small>Favoritos</small>
-    </button>
+      <p style="color:#aaa">
+        Elegí tu fondo favorito
+      </p>
 
-    <button type="button" id="ajustes">
-      ⚙
-      <small>Ajustes</small>
-    </button>
+      <div id="lista"
+        style="
+          display:grid;
+          gap:15px;
+          margin-top:20px;
+        ">
+      </div>
 
-  </div>
+    </div>
+  `;
 
-</section>
+  document.body.appendChild(pantalla);
 
-<section class="quote">
+  document.getElementById("cerrar").onclick = function() {
+    pantalla.remove();
+  };
 
-  <span>“</span>
+  const lista = document.getElementById("lista");
 
-  <p>
-    It’s not who I am underneath,<br>
-    but what I do that defines me.
-  </p>
+  wallpapers.forEach(function(fondo) {
 
-  <small>— THE DARK KNIGHT</small>
+    const tarjeta = document.createElement("div");
 
-</section>
+    tarjeta.style.cssText = `
+      background:${fondo.color};
+      border:2px solid #f5c400;
+      border-radius:18px;
+      padding:20px;
+      min-height:200px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+    `;
 
-<footer>
-  FAN CONCEPT • BATMAN-INSPIRED UI
-</footer>
+    tarjeta.innerHTML = `
+      <div style="
+        font-size:65px;
+        text-align:center;
+        margin-bottom:15px;
+      ">🦇</div>
 
-</main>
+      <strong style="
+        color:#f5c400;
+        font-size:18px;
+      ">
+        ${fondo.nombre}
+      </strong>
 
-<script src="app.js?v=3"></script>
+      <button class="elegir"
+        style="
+          margin-top:12px;
+          padding:13px;
+          border:0;
+          border-radius:10px;
+          background:#f5c400;
+          color:#000;
+          font-weight:bold;
+        ">
+        ELEGIR FONDO
+      </button>
+    `;
 
-</body>
-</html>
+    tarjeta.querySelector(".elegir").onclick = function() {
+      alert("🦇 ¡Fondo seleccionado!");
+    };
+
+    lista.appendChild(tarjeta);
+
+  });
+
+}
