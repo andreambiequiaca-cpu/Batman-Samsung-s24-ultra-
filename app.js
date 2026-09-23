@@ -1,156 +1,94 @@
-const wallpapers = [
-  {
-    nombre: "GOTHAM NIGHT",
-    color: "linear-gradient(135deg,#050505,#151515,#f5c400)"
-  },
-  {
-    nombre: "DARK KNIGHT",
-    color: "linear-gradient(135deg,#000000,#242424,#f5c400)"
-  },
-  {
-    nombre: "BAT SIGNAL",
-    color: "radial-gradient(circle,#f5c400 0%,#111 35%,#000 75%)"
-  },
-  {
-    nombre: "GOTHAM CITY",
-    color: "linear-gradient(160deg,#000,#111827,#f5c400)"
-  }
-];
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b10">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>GOTHAM | Dark Knight</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-const botones = document.querySelectorAll(".grid button");
+<body>
 
-botones.forEach(boton => {
-  const nombre = boton.querySelector("small")?.textContent.trim();
+<main class="phone">
 
-  if (nombre === "Fondos" || nombre === "Galería") {
-    boton.onclick = abrirFondos;
-  }
+<header>
+  <span class="mark">🦇</span>
+  <span>
+    GOTHAM
+    <small>S24 ULTRA EDITION</small>
+  </span>
+  <button id="mode" type="button">☾</button>
+</header>
 
-  if (nombre === "Favoritos") {
-    boton.onclick = () => {
-      alert("⭐ Próximamente podrás guardar tus fondos favoritos.");
-    };
-  }
+<section class="hero">
 
-  if (nombre === "Ajustes") {
-    boton.onclick = () => {
-      alert("⚙️ Ajustes de Gotham");
-    };
-  }
-});
+  <p class="eyebrow">GOTHAM CITY • NIGHT MODE</p>
 
-document.getElementById("mode").onclick = () => {
-  document.body.classList.toggle("light");
-};
+  <h1>
+    THE<br>
+    <em>DARK KNIGHT</em>
+  </h1>
 
-function abrirFondos() {
-  const pantalla = document.createElement("div");
+  <p class="sub">
+    La noche también tiene un guardián.
+  </p>
 
-  pantalla.style.cssText = `
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    background:#050505;
-    color:white;
-    padding:25px;
-    overflow:auto;
-    font-family:Arial,sans-serif;
-  `;
+  <div class="bat">🦇</div>
 
-  pantalla.innerHTML = `
-    <div style="max-width:500px;margin:auto">
+</section>
 
-      <button id="cerrarFondos"
-        style="
-          background:#f5c400;
-          color:#000;
-          border:0;
-          border-radius:10px;
-          padding:12px 18px;
-          font-weight:bold;
-        ">
-        ← VOLVER
-      </button>
+<section class="panel">
 
-      <h1 style="color:#f5c400;margin-top:25px">
-        🦇 FONDOS GOTHAM
-      </h1>
+  <h2>ACCESOS RÁPIDOS</h2>
 
-      <p style="color:#aaa">
-        Elegí tu fondo favorito
-      </p>
+  <div class="grid">
 
-      <div id="listaFondos"
-        style="
-          display:grid;
-          gap:15px;
-          margin-top:20px;
-        ">
-      </div>
+    <button type="button" id="galeria">
+      ◈
+      <small>Galería</small>
+    </button>
 
-    </div>
-  `;
+    <button type="button" id="fondos">
+      ▣
+      <small>Fondos</small>
+    </button>
 
-  document.body.appendChild(pantalla);
+    <button type="button" id="favoritos">
+      ✦
+      <small>Favoritos</small>
+    </button>
 
-  document.getElementById("cerrarFondos").onclick = () => {
-    pantalla.remove();
-  };
+    <button type="button" id="ajustes">
+      ⚙
+      <small>Ajustes</small>
+    </button>
 
-  const lista = document.getElementById("listaFondos");
+  </div>
 
-  wallpapers.forEach(fondo => {
+</section>
 
-    const tarjeta = document.createElement("div");
+<section class="quote">
 
-    tarjeta.style.cssText = `
-      background:${fondo.color};
-      border:1px solid #f5c400;
-      border-radius:18px;
-      padding:20px;
-      min-height:180px;
-      display:flex;
-      flex-direction:column;
-      justify-content:flex-end;
-      box-shadow:0 0 20px #000;
-    `;
+  <span>“</span>
 
-    tarjeta.innerHTML = `
-      <div style="
-        font-size:60px;
-        text-align:center;
-        margin-bottom:15px;
-      ">
-        🦇
-      </div>
+  <p>
+    It’s not who I am underneath,<br>
+    but what I do that defines me.
+  </p>
 
-      <strong style="
-        color:#f5c400;
-        font-size:16px;
-      ">
-        ${fondo.nombre}
-      </strong>
+  <small>— THE DARK KNIGHT</small>
 
-      <button
-        style="
-          margin-top:12px;
-          padding:12px;
-          border:0;
-          border-radius:10px;
-          background:#f5c400;
-          color:#000;
-          font-weight:bold;
-        ">
-        ELEGIR FONDO
-      </button>
-    `;
+</section>
 
-    const boton = tarjeta.querySelector("button");
+<footer>
+  FAN CONCEPT • BATMAN-INSPIRED UI
+</footer>
 
-    boton.onclick = () => {
-      alert("🦇 Fondo seleccionado.");
-    };
+</main>
 
-    lista.appendChild(tarjeta);
-  });
-}
+<script src="app.js?v=3"></script>
+
+</body>
+</html>
